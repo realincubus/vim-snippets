@@ -1,9 +1,4 @@
-priority -50
-
 extends c
-
-# We want to overwrite everything in parent ft.
-priority -49
 
 ###########################################################################
 #                            TextMate Snippets                            #
@@ -13,28 +8,27 @@ ${1:v}${1/^.*?(-)?(>)?$/(?2::(?1:>:.))/}begin(), $1${1/^.*?(-)?(>)?$/(?2::(?1:>:
 endsnippet
 
 snippet cl "class .. (class)"
-class ${1:`!p snip.rv = snip.basename or "name"`}
-{
+class ${1:`!p snip.rv = snip.basename or "name"`} {
 public:
-	${1/(\w+).*/$1/} (${2:arguments});
-	virtual ~${1/(\w+).*/$1/} ();
+    ${1/(\w+).*/$1/} (${2:arguments}) 
+    {
+    }
+    virtual ~${1/(\w+).*/$1/} () {}
 
 private:
-	${0:/* data */}
+    ${0:/* data */}
 };
 endsnippet
 
 snippet ns "namespace .. (namespace)"
-namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
-{
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`} {
+    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }${1/.+/ \/* /m}$1${1/.+/ *\/ /m}
 endsnippet
 
 snippet readfile "read file (readF)"
 std::vector<char> v;
-if (FILE *fp = fopen(${1:"filename"}, "r"))
-{
+if (FILE *fp = fopen(${1:"filename"}, "r")) {
 	char buf[1024];
 	while(size_t len = fread(buf, 1, sizeof(buf), fp))
 		v.insert(v.end(), buf, buf + len);
@@ -42,16 +36,555 @@ if (FILE *fp = fopen(${1:"filename"}, "r"))
 }
 endsnippet
 
+snippet str "std::string" 
+std::string
+endsnippet
+
 snippet map "std::map (map)"
 std::map<${1:key}, ${2:value}> map$0;
 endsnippet
 
-snippet vector "std::vector (v)"
+snippet ve "std::vector (v)"
 std::vector<${1:char}> v$0;
 endsnippet
 
 snippet tp "template <typename ..> (template)"
 template <typename ${1:_InputIter}>
 endsnippet
+
+snippet arr "create a c standard array" 
+${2:int} ${1:array}[${3:100}];
+endsnippet
+
+snippet lam "lambda" 
+[${1:}](${2:auto a}){ return ${3:}; }
+endsnippet
+
+snippet asy "async task" 
+std::async(std::launch::async, ${1:lam});
+endsnippet
+
+snippet cou "cout line with lineend" 
+std::cout << "${1:some text}\n";
+endsnippet
+
+snippet usi "using namespace" 
+using namespace ${1:std};
+endsnippet
+
+snippet usd "using declaration" 
+using ${1:Namespace}::${2:var};
+endsnippet
+
+snippet enum "strongly typed enumerations" 
+enum class ${1:Enumeration} {
+    $2
+};
+endsnippet
+
+snippet todo "todo in doxygen" 
+/// @todo ${1:text}  
+endsnippet
+
+snippet nul "nullptr" 
+nullptr
+endsnippet
+
+## STL Collections
+# std::array
+snippet array 
+std::array<${1:T}, ${2:N}> ${3};${4}
+endsnippet
+# std::deque
+snippet deque
+std::deque<${1:T}> ${2};${3}
+endsnippet
+# std::forward_list
+snippet flist
+std::forward_list<${1:T}> ${2};${3}
+endsnippet
+# std::list
+snippet list
+std::list<${1:T}> ${2};${3}
+endsnippet
+# std::set
+snippet set
+std::set<${1:T}> ${2};${3}
+endsnippet
+# std::multiset
+snippet mset
+std::multiset<${1:T}> ${2};${3}
+endsnippet
+# std::multimap
+snippet mmap
+std::multimap<${1:Key}, ${2:T}> ${3};${4}
+endsnippet
+# std::unordered_set
+snippet uset
+std::unordered_set<${1:T}> ${2};${3}
+endsnippet
+# std::unordered_map
+snippet umap
+std::unordered_map<${1:Key}, ${2:T}> ${3};${4}
+endsnippet
+# std::unordered_multiset
+snippet umset
+std::unordered_multiset<${1:T}> ${2};${3}
+endsnippet
+# std::unordered_multimap
+snippet ummap
+std::unordered_multimap<${1:Key}, ${2:T}> ${3};${4}
+endsnippet
+# std::stack
+snippet stack
+std::stack<${1:T}> ${2};${3}
+endsnippet
+# std::queue
+snippet queue
+std::queue<${1:T}> ${2};${3}
+endsnippet
+# std::priority_queue
+snippet pqueue
+std::priority_queue<${1:T}> ${2};${3}
+endsnippet
+##
+## Access Modifiers
+# private
+snippet pri
+private
+endsnippet
+# protected
+snippet pro
+protected
+endsnippet
+# public
+snippet pub
+public
+endsnippet
+# friend
+snippet fr
+friend
+endsnippet
+# mutable
+snippet mu
+mutable
+endsnippet
+
+snippet up "unique pointer" 
+unique_ptr<${1:int}> ${2:name}( ${3:unmanaged} );
+endsnippet
+
+snippet make_unique "make_unique" 
+make_unique(${1:ctor_args})
+endsnippet
+
+snippet make_unique_declare "make unique with declare" 
+auto ${2:up} = make_unique(${1:ctor_args});
+endsnippet
+
+snippet sp  "shared pointer" 
+shared_ptr<${1:int}> ${2:name};
+endsnippet
+
+snippet pa  "pair" 
+std::pair<${1:int},${2:int}> ${3:name};
+endsnippet
+
+snippet fore "algorithm for each" 
+std::for_each( begin(${1:container}), end($1), ${3:unary_function} );
+endsnippet
+
+snippet fori "for with iterators" 
+for( auto ${2:i} = begin($1), e = end(${1:container}); i != e ++i ){
+    $3
+}
+endsnippet
+
+snippet forp "upcounting for" 
+for( auto ${3:i} = ${1:from} ; $3 < ${2:to} ; ++$3 ){
+    $4
+}
+endsnippet
+
+snippet accumulate  "algorithm accumulate" 
+std::accumulate( begin(${2:container}), end($2), ${3:0} )
+endsnippet
+
+snippet minmax "algorithm minmax returns pair" 
+std::minmax( ${2:a}, ${3:b} )
+endsnippet
+
+snippet minmax_element "algorithm minmax_element returns iterator" 
+std::minmax_element( begin(${1:container}), end($1) )
+endsnippet
+
+snippet min "algorithm min " 
+std::min( ${2:a}, ${3:b} )
+endsnippet
+
+snippet min_element "algorithm min_element " 
+std::min_element( begin(${2:container}, end($2) )
+endsnippet
+
+snippet max "algorithm max " 
+std::max( ${2:a}, ${3:b} )
+endsnippet
+
+snippet max_element "algorithm max_element " 
+std::max_element( begin(${2:container}, end($2) )
+endsnippet
+
+snippet lower_bound  "algorithm lower_bound works on ordered lists and vectors" 
+std::lower_bound( begin(${2:container}, end($2) )
+endsnippet
+
+snippet upper_bound  "algorithm upper_bound works on ordered lists and vectors" 
+std::upper_bound( begin(${2:container}, end($2) )
+endsnippet
+
+snippet copy "copy algorithm" 
+std::copy( begin(${1:container}),
+    end($1),
+    begin(${2:destination_container})
+);
+endsnippet
+
+snippet copytostream "writes the elements of the container to stream" 
+// writes the elements of container $1 to stream $4
+std::copy( begin(${1:container}),
+    end($1), 
+    ${2:std::ostream_iterator<${3:type}>(${4:std::cout}, "\n")} 
+);
+endsnippet
+
+snippet generate "algorithm generate" 
+std::generate( begin(${1:container}), end($1), ${2:lam} );
+endsnippet
+
+snippet transform "algorithm transform" 
+std::transform( begin(${1:container}), 
+    end($1), 
+    begin($1), 
+    []( auto element ){ return ${2:element}; } 
+);
+endsnippet
+
+snippet fill "algorithm fill " 
+std::fill( begin(${1:container}), end($1), ${2:value} );
+endsnippet
+
+snippet find  "algorithm find " 
+std::find( begin(${1:container}), end($1), ${2:value} )
+endsnippet
+
+snippet find_if "if with find in it " 
+if ( find(begin(${1:container}), end($1), ${2:value} ) != end($1) ){
+
+}
+endsnippet
+
+snippet count_if "algorithm count_if " 
+std::count_if( begin(${1:container}), end($1), ${2:lam} )
+endsnippet
+
+snippet count "algorithm count " 
+std::count( begin(${1:container}), end($1), ${2:value} )
+endsnippet
+
+snippet exitq "quick_exit" 
+// dont unroll stack simply quit
+std::quick_exit( -1 );
+endsnippet
+
+snippet sleep "sleep_for" 
+std::this_thread::sleep_for( std::chrono::milliseconds( ${1:2000} ) );
+endsnippet
+
+snippet random_device  "random_device" 
+std::random_device rand_device;
+endsnippet
+
+snippet rand_gen "random_generator" 
+std::mt19937 rand_gen( rand_device() );
+endsnippet
+
+snippet uniform_real_distribution "uniform_real_distribution" 
+std::uniform_real_distribution<> ur_distr(${1:0}, ${2:1});
+endsnippet
+
+snippet uniform_int_distribution "uniform_int_distribution" 
+std::uniform_int_distribution<> ui_distr(${1:0}, ${2:100});
+endsnippet
+
+snippet rand "getrand" 
+${1:distribution}(${2:generator})
+endsnippet
+
+snippet decl "declaretype macro" 
+decltype( ${1:} ) ${2:name}; 
+endsnippet
+
+snippet operator "operatoroverload" 
+${1:auto&} operator${2:+}( const ${3:$1}& rhs ){
+    return ;
+}
+endsnippet
+
+
+snippet switch "switch case" 
+switch(${1:}){
+    case ${2:}: {
+
+        break;
+    }
+    case ${3:}: {
+
+        break;
+    }
+    default:
+        assert(0);
+}
+endsnippet
+
+snippet case  "case of a switch" 
+case ${1:} :{
+    $2
+    break;
+}
+endsnippet
+
+snippet enter "write entering" !b
+cout << "entering " << __FUNCTION__ << endl;
+endsnippet
+
+snippet leave "write leave" 
+cout << "leaving " << __FUNCTION__ << endl;
+endsnippet
+
+snippet ifstream "input file stream" 
+ifstream ${1:in}(${2:"infile.dat"});
+assert( $1.good() );
+endsnippet
+
+snippet ofstream "input file stream" 
+ofstream ${1:out}(${2:"outfile.dat"});
+endsnippet
+
+snippet ifstreamtocontainer "reads a file to a container" 
+// reads the file $2 into the container $3
+ifstream ${1:in}(${2:"infile.dat"});
+
+std::copy(  istream_iterator<${4:type}>($1),
+	    istream_iterator<$4>(),
+	    std::inserter(${3:container},end($3))
+);
+endsnippet
+
+snippet set_symmetric_difference "computes the symmetric difference of to containers" 
+// computes the symmetric difference of $1 and $2 and stores result to $3
+std::set_symmetric_difference(
+    begin(${1:container1}), end($1),
+    begin(${2:container2}), end($2),
+    std::inserter(${3:destination_container}, end($3))
+);
+endsnippet
+
+snippet sort "sortes a range" 
+std::sort( begin(${1:container}), end($1) )
+endsnippet
+
+snippet merge "merges to sorted ranges" 
+// merges $1 and $2 and stores result to $3
+std::merge(
+    begin(${1:container1}), end($1),
+    begin(${2:container2}), end($2),
+    std::back_inserter(${3:destination_container})
+);
+endsnippet
+
+snippet intersect "computes the intersection of two sets" 
+// computes the intersection of $1 and $2 and stores result to $3
+std::set_intersection(
+    begin(${1:container1}), end($1),
+    begin(${2:container2}), end($2),
+    std::back_inserter(${3:destination_container})
+);
+endsnippet
+
+snippet difference "computes the intersection of two sets" 
+// computes the difference of $1 and $2 and stores result to $3
+std::set_difference(
+    begin(${1:container1}), end($1),
+    begin(${2:container2}), end($2),
+    std::back_inserter(${3:destination_container})
+);
+endsnippet
+
+snippet union "computes the union of two sets" 
+// computes the union of $1 and $2 and stores result to $3
+std::set_union(
+    begin(${1:container1}), end($1),
+    begin(${2:container2}), end($2),
+    std::back_inserter(${3:destination_container})
+);
+endsnippet
+
+snippet distance "returns the distance between two iterators" 
+distance( ${1:it1}, ${2:it2} )
+endsnippet
+
+snippet be "begin and end of container" 
+begin(${1:container}), end($1)
+endsnippet
+
+snippet remove_copy_if "copys elements to other container omitting elements" 
+// filters all elements in $1 that satisfy the criteria
+// and inserts them into $2
+std::remove_copy_if(begin(${1:container}), 
+    end($1), 
+    std::back_inserter(${2:destination_container}),
+    [](auto element){ return ${3:true};} 
+);
+endsnippet
+
+snippet replace_copy_if "replaces all elements that satisfy the criteria" 
+// replaces all elements in $1 with $4 that satisfy the criteria 
+// and fills them into $2
+std::replace_copy_if(begin(${1:container}), 
+    end($1), 
+    std::back_inserter(${2:destination_container}),
+    [](auto element){ return ${3:true};},
+    ${4:"replacement"}
+);
+endsnippet
+
+snippet unique "removes dublicates" 
+std::unique( begin(${1:container}), end($1) ${2:, predicate});
+endsnippet
+
+snippet unique_copy "removes dublicates and copies to other container" 
+std::unique_copy( 
+    begin(${1:container}), 
+    end($1), 
+    std::back_inserter(${2:other_container}) 
+);
+endsnippet
+
+snippet iota "iota" 
+std::iota( begin(${1:container}), end($1) ${2:, -5} )
+endsnippet
+
+snippet inner_product "inner_product or dot product"
+std::inner_product( 
+    begin(${1:container}), 
+    end($1), 
+    begin(${2:container2}), 
+    ${3:0.0}
+)
+endsnippet
+
+snippet auto "creates a auto var with initializer" 
+auto ${1:name} = 
+endsnippet
+
+snippet fung "general function"
+${1:type} ${2:function_name}(${3:int arg1}){
+    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+    return ${4:0};
+}
+endsnippet
+
+snippet funv "function returning void"
+void ${1:function_name}(${2:int arg1}){
+    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+}
+endsnippet
+
+snippet funa "function" b
+auto ${1:function_name}(${2}) {
+    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+    return ${3:0};
+}
+endsnippet
+
+snippet tfuna "template function "
+template < typename ${1:T} >
+auto ${2:function_name}( ${3:T arg1} ){
+    return 0;
+}
+endsnippet
+
+snippet now "return now as a point in time " 
+std::chrono::high_resolution_clock::now()
+endsnippet
+
+
+snippet delta "generate a function that returns the difference between two adjacent steps" 
+
+endsnippet
+
+
+snippet erase "erase remove idiom for vector family" 
+${1:container}.erase(
+    remove_if(	begin($1), 
+		end($1), 
+		${2:[]( auto element )
+		{ 
+		    return element > 0; 
+		}
+		}
+	    ),
+	    end($1)
+)
+endsnippet
+
+snippet ass "assert" 
+assert( ${1:0} && "${2:not implemented}" )
+endsnippet
+
+snippet er "llvm::errs()" 
+llvm::errs() << "${1:text}\n";
+endsnippet
+
+snippet getopt "getopt environment"
+// command line argument parsing
+
+// data with defaults
+std::string a_string = "";
+bool c_set = false;
+
+// parse all switches
+while ( int opt = getopt(argc, argv, "a:c") ){
+    if ( opt == -1 ) break;
+    switch(opt) {
+	case 'a':{
+	    a_string = optarg;
+	    break;
+	}
+	case 'c':{
+	    c_set = true;
+	    break;
+	}
+	default:{
+	    fprintf(stderr, "Usage: %s \n",argv[0]);
+	    exit(EXIT_FAILURE);
+	}
+    }
+}
+// parse all non-option arguments
+for( ; optind < argc ; optind++){
+    std::cout << argv[optind] << std::endl;
+}
+endsnippet
+
+
+
+
+
+
+
+
+
+
 
 # vim:ft=snippets:
