@@ -29,10 +29,10 @@ endsnippet
 snippet readfile "read file (readF)"
 std::vector<char> v;
 if (FILE *fp = fopen(${1:"filename"}, "r")) {
-	char buf[1024];
-	while(size_t len = fread(buf, 1, sizeof(buf), fp))
-		v.insert(v.end(), buf, buf + len);
-	fclose(fp);
+    char buf[1024];
+    while(size_t len = fread(buf, 1, sizeof(buf), fp))
+	    v.insert(v.end(), buf, buf + len);
+    fclose(fp);
 }
 endsnippet
 
@@ -577,14 +577,12 @@ for( ; optind < argc ; optind++){
 }
 endsnippet
 
+snippet fora "for range auto loop (fora)"
+for( auto&& ${2:element} : ${1:container} ){
+    ${VISUAL}${0}
+}
 
-
-
-
-
-
-
-
+endsnippet
 
 
 # vim:ft=snippets:
