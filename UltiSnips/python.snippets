@@ -583,4 +583,18 @@ class Test${1:Class}(${2:unittest.TestCase}):
 		${7:pass}
 endsnippet
 
+snippet ycm "ycm_extra_conf.py" 
+def DirectoryOfThisScript():
+  return os.path.dirname( os.path.abspath( __file__ ) )
+
+compilation_database_folder = DirectoryOfThisScript()
+
+if compilation_database_folder:
+  database = ycm_core.CompilationDatabase( compilation_database_folder )
+else:
+  database = None
+
+endsnippet
+
+
 # vim:ft=snippets:

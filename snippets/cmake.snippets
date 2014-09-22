@@ -22,6 +22,8 @@ snippet cmake
 
 	#TARGET_LINK_LIBRARIES( bin_$1 )
 
+snippet append "append something to a variable" 
+	SET(${1} "${$1} ${2:}")
 snippet include
 	INCLUDE_DIRECTORIES(
 		${${0:INCLUDE_DIR}}
