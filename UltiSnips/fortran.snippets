@@ -1,0 +1,44 @@
+snippet pr "program" 
+program ${1:name} 
+
+end ! program $1
+endsnippet
+
+snippet mod "Module" 
+module ${1:name} 
+  ! data section
+
+  contains
+  ! subroutine section
+
+end ! module $1
+endsnippet
+
+snippet wr "write" 
+write(*,*) ${1:'text'}
+endsnippet
+
+snippet sub "subroutine" 
+subroutine ${1:name}(${2:arg})
+
+end ! subroutine $1
+endsnippet
+
+
+snippet fun "function"
+function ${1:fun}(${2:arg})
+
+end ! function $1
+endsnippet
+
+snippet if "If"
+if ( ${1:expression} ) then
+
+end if
+endsnippet
+
+snippet wh "while"
+do while( ${1:expression} )
+
+end do
+endsnippet
