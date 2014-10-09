@@ -1,0 +1,23 @@
+snippet modfile "create a new module file" 
+prepend-path	PATH		    /${1}/
+prepend-path	CPATH		    /$1/include/
+prepend-path    LIBRARY_PATH	    /$1/lib/
+prepend-path    LD_LIBRARY_PATH	    /$1/lib/
+prepend-path    MANPATH		    /$1/man/
+endsnippet
+
+snippet prec "CPATH" 
+prepend-path    CPATH               /${1}/include/
+endsnippet
+
+snippet prep "PATH" 
+prepend-path    PATH               /${1}
+endsnippet
+
+snippet preld "LD_LIBRARY_PATH" 
+prepend-path    LD_LIBRARY_PATH	    /${1}/lib/
+endsnippet
+
+snippet prel "LIBRARY_PATH" 
+prepend-path    LIBRARY_PATH	    /${1}/lib/
+endsnippet

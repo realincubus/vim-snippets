@@ -1,0 +1,7 @@
+
+snippet host "host" 
+Host ${1}
+User ${2}
+ProxyCommand ssh -W %h:%p ${3:brige}
+Hostname ${4:$1}
+endsnippet
