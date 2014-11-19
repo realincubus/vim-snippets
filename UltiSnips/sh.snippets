@@ -89,4 +89,12 @@ while ${2:[[ ${1:condition} ]]}; do
 done
 endsnippet
 
+snippet par "execute a command in parallel" b
+${2:ls *.png} | parallel ${1:./bin_cmd} {} 
+endsnippet
+
+snippet vid "make a video from multiple images" b
+ffmpeg -i image%04d.png -c:v libx264 out.mp4
+endsnippet
+
 # vim:ft=snippets:
