@@ -1,25 +1,23 @@
 snippet cmake
-	CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+	CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 	PROJECT(${1:ProjectName})
 
 	SET( CMAKE_BUILD_TYPE DEBUG )
 
-	#SET( CMAKE_C_COMPILER clang++ )
-	#SET( CMAKE_CXX_COMPILER clang++ )
-	SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native" )
-	SET( CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -pedantic -DGLIBCXX_DEBUG -fsanitize=address" )
-	SET( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -std=c++1y" )
-	SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_C_FLAGS_DEBUG}" )
+	SET( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -march=native" )
+	SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic -D_GLIBCXX_DEBUG -fsanitize=address" )
 	SET( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}" )
+
+	SET( CMAKE_CXX_STANDARD 14 )
 
 	#SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
 	#SET( LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
 
 	SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
 
-	#INCLUDE_DIRECTORIES( )
 	ADD_EXECUTABLE(bin_$1 ${2:main.cpp})
 
+	#TARGET_INCLUDE_DIRECTORIES( bin_$1 )
 	#TARGET_LINK_LIBRARIES( bin_$1 )
 
 snippet append "append something to a variable" 
@@ -43,8 +41,9 @@ snippet find_cuda "find cuda"
 	ENDIF()
 
 snippet include
-	INCLUDE_DIRECTORIES(
-		${${0:INCLUDE_DIR}}
+	TARGET_INCLUDE_DIRECTORIES(
+		${1:target}
+		${2:/path}
 	)
 
 snippet find
@@ -66,7 +65,7 @@ snippet link
 		${0:somelib}
 	)
 
-snippet bin
+snippet adde
 	ADD_EXECUTABLE(${1:bin})
 
 snippet set

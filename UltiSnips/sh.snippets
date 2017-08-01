@@ -97,4 +97,33 @@ snippet vid "make a video from multiple images" b
 ffmpeg -i image%04d.png -c:v libx264 out.mp4
 endsnippet
 
+snippet submit "submit script" 
+#!/bin/bash
+#SBATCH --job-name=${1:jobname}
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=8
+##SBATCH --partition=atlasmem
+##SBATCH --nodelist=hpc05,hpc06
+#SBATCH --mail-type=end
+#SBATCH --mail-user=${2:}@${3:.com}
+#SBATCH --share
+
+# load modules 
+module load 
+
+# prepare run directory
+BASEDIR=$(pwd)
+TEMPLATEDIR=$BASEDIR/simulation
+RUNDIR=$BASEDIR/simulation_$SLURM_JOB_ID.$SLURM_JOB_NAME
+mkdir $RUNDIR
+
+# copy all data from TEMPLATEDIR to RUNDIR
+
+# run the binary
+cd $RUNDIR
+time mpirun ./my_app
+
+# post processing
+endsnippet
+
 # vim:ft=snippets:

@@ -130,4 +130,65 @@ snippet fund "function declaration" b
 ${1:void} ${2:function_name}(${3});
 endsnippet
 
+snippet mpi_rank "mpi rank"
+int $1; 
+MPI_Comm_rank (MPI_COMM_WORLD, &${1:mpi_rank});
+endsnippet
+
+snippet mpi_size "mpi size"
+int $1; 
+MPI_Comm_size (MPI_COMM_WORLD, &${1:mpi_size});
+endsnippet
+
+snippet mpi_world "Description"
+MPI_COMM_WORLD
+endsnippet
+
+snippet mpi_scatter "scatter"
+MPI_Scatter( ${1:sendbuf}, ${2:sendcount}, ${3:sendtype}, ${4:recvcount}, ${5:recvtype}, ${6:root}, ${7:world} );
+endsnippet
+
+snippet mpi_broadcast "broadcast"
+MPI_Bcast( ${1:buffer}, ${2:count}, ${3:type}, ${4:root}, ${5:world} );
+endsnippet
+
+snippet mpi_reduce "reduce"
+MPI_Reduce( ${1:sendbuffer}, ${2:recvbuffer}, ${3:count}, ${4:type}, ${5:op}, ${6:root}, ${7:world} );
+endsnippet
+
+snippet mpi_send "send"
+MPI_Send( ${1:sendbuf}, ${2:sendcount}, ${3:type}, ${4:dest}, ${5:tag}, ${6:world} );
+endsnippet
+
+snippet mpi_recv "receive"
+MPI_Recv( ${1:recvbuf}, ${2:count}, ${3:type}, ${4:dest}, ${5:tag}, ${6:world} );
+endsnippet
+
+snippet ass "assert"
+assert( ${1:0} && "${2}" );
+endsnippet
+
+snippet exf "exit failure"
+exit(EXIT_FAILURE);
+endsnippet
+
+snippet exs "exit success" 
+exit(EXIT_SUCCESS);
+endsnippet
+
+snippet mpi_init "init text"
+MPI_Init( &argc, &argv );
+endsnippet
+
+snippet mpi_get_processor_name "pname"
+char pname[MPI_MAX_PROCESSOR_NAME];
+int resultlen = -1;
+MPI_Get_processor_name( pname, &resultlen );
+endsnippet
+
+snippet mpi_final "finalize"
+MPI_Finalize();
+endsnippet
+
+
 # vim:ft=snippets:
