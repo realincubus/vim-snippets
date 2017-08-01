@@ -32,6 +32,14 @@ snippet find_openmp "find openmp"
 	    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 	ENDIF()
 
+snippet find_mpi "find mpi"
+	FIND_PACKAGE( MPI REQUIRED )
+	IF( MPI_FOUND )
+	  include_directories(${MPI_INCLUDE_PATH})
+	  target_link_libraries(hello ${MPI_LIBRARIES})
+	ENDIF()
+
+
 snippet find_cuda "find cuda" 
 	FIND_PACKAGE(CUDA REQUIRED)
 	IF(CUDA_FOUND)
