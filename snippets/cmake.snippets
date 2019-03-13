@@ -9,7 +9,7 @@ snippet cmake
 
 	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS} -march=native" )
 
-	SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic -D_GLIBCXX_DEBUG -fsanitize=address" )
+	SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic" )
 	if ( ${USE_ADDRESS_SANITIZER} )
 	  SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address" )
 	endif()
