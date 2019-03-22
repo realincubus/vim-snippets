@@ -6,8 +6,10 @@ snippet cmake
 	option( USE_ADDRESS_SANITIZER on)
 	option( USE_LIBRARY_ACCESS_CHECK off)
 
+	#subdirectories to use
+	${2:back}
 
-	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS} -march=native" )
+	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native" )
 
 	SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic" )
 	if ( ${USE_ADDRESS_SANITIZER} )
@@ -26,7 +28,9 @@ snippet cmake
 
 	SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
 
-	ADD_EXECUTABLE(bin_$1 ${2:main.cpp})
+	ADD_EXECUTABLE(bin_$1 main.cpp)
+	#target_sources(bin$1 PRIVATE ${BACKWARD_ENABLE})
+	#add_backward(bin_$1)
 
 	#TARGET_INCLUDE_DIRECTORIES( bin_$1 )
 	#TARGET_LINK_LIBRARIES( bin_$1 )

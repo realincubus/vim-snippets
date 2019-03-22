@@ -1,0 +1,63 @@
+global !p
+import os
+
+def backward_cpp(snip):
+    os.system("mkdir backward_cpp 2> /dev/null ")
+    os.system("cd backward_cpp && if [[ ! -f BackwardConfig.cmake ]]; then wget https://raw.githubusercontent.com/bombela/backward-cpp/master/BackwardConfig.cmake 2> /dev/null; fi")
+    os.system("cd backward_cpp && if [[ ! -f CMakeLists.txt ]]; then wget https://raw.githubusercontent.com/bombela/backward-cpp/master/CMakeLists.txt 2> /dev/null; fi")
+    os.system("cd backward_cpp && if [[ ! -f backward.cpp ]]; then wget https://raw.githubusercontent.com/bombela/backward-cpp/master/backward.cpp 2> /dev/null; fi")
+    os.system("cd backward_cpp && if [[ ! -f backward.hpp ]]; then wget https://raw.githubusercontent.com/bombela/backward-cpp/master/backward.hpp 2> /dev/null; fi")
+    return 'add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/backward_cpp)'
+
+def create_main_cpp(snip):
+    os.system("echo '#include <iostream>\n\nint main(int argc, char** argv){\n  return 0;\n}' > main.cpp")
+    return ""
+
+endglobal
+
+snippet back "backward-cpp" 
+`!p snip.rv = backward_cpp(snip)`
+endsnippet
+
+snippet cmakep
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+PROJECT(${1:ProjectName})
+
+SET( CMAKE_BUILD_TYPE DEBUG )
+option( USE_ADDRESS_SANITIZER "use address sanitizer of gcc/clang" OFF )
+option( USE_LIBRARY_ACCESS_CHECK "use std++ build in access detection for containers" OFF )
+option( USE_BACKWARD "use backward cpp" ON )
+
+
+#subdirectories to use
+`!p snip.rv = backward_cpp(snip)`
+
+SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native" )
+
+SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -pedantic" )
+if ( ${USE_ADDRESS_SANITIZER} )
+  SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address" )
+endif()
+if ( ${USE_LIBRARY_ACCESS_CHECK} )
+  SET( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG" )
+endif()
+
+SET( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}" )
+
+SET( CMAKE_CXX_STANDARD 14 )
+
+#SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
+#SET( LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib )
+
+SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
+
+`!p snip.rv = create_main_cpp(snip)`
+ADD_EXECUTABLE(bin_$1 main.cpp)
+if ( ${USE_BACKWARD} )
+  target_sources(bin_$1 PRIVATE ${BACKWARD_ENABLE})
+  add_backward(bin_$1)
+endif()
+
+#TARGET_INCLUDE_DIRECTORIES( bin_$1 )
+#TARGET_LINK_LIBRARIES( bin_$1 )
+endsnippet
