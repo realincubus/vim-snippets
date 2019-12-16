@@ -10,35 +10,35 @@ endsnippet
 snippet cl "class .. (class)"
 class ${1:`!p snip.rv = snip.basename or "name"`} {
 public:
-    ${1/(\w+).*/$1/} (${2:arguments}) 
-    {
-    }
-    virtual ~${1/(\w+).*/$1/} () {}
+  ${1/(\w+).*/$1/} (${2:arguments}) 
+  {
+  }
+  virtual ~${1/(\w+).*/$1/} () {}
 
 private:
-    ${0:/* data */}
+  ${0:/* data */}
 };
 endsnippet
 
 snippet cls "class .. (class)"
 class ${1:`!p snip.rv = snip.basename or "name"`} {
 public:
-    ${1/(\w+).*/$1/} (${2:arguments});
-    virtual ~${1/(\w+).*/$1/} ();
+  ${1/(\w+).*/$1/} (${2:arguments});
+  virtual ~${1/(\w+).*/$1/} ();
 
 private:
-    ${0:/* data */}
+  ${0:/* data */}
 };
 endsnippet
 
 snippet dcl "class .. derived from "
 class ${1:`!p snip.rv = snip.basename or "name"`} : public ${2:Base}{
 public:
-    ${1/(\w+).*/$1/} (${3:arguments});
-    virtual ~${1/(\w+).*/$1/} ();
+  ${1/(\w+).*/$1/} (${3:arguments});
+  virtual ~${1/(\w+).*/$1/} ();
 
 private:
-    ${0:/* data */}
+  ${0:/* data */}
 };
 endsnippet
 
@@ -56,17 +56,17 @@ endsnippet
 
 snippet ns "namespace .. (namespace)"
 namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`} {
-    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+  ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }${1/.+/ \/* /m}$1${1/.+/ *\/ /m}
 endsnippet
 
 snippet readfile "read file (readF)"
 std::vector<char> v;
 if (FILE *fp = fopen(${1:"filename"}, "r")) {
-    char buf[1024];
-    while(size_t len = fread(buf, 1, sizeof(buf), fp))
-	    v.insert(v.end(), buf, buf + len);
-    fclose(fp);
+  char buf[1024];
+  while(size_t len = fread(buf, 1, sizeof(buf), fp))
+        v.insert(v.end(), buf, buf + len);
+  fclose(fp);
 }
 endsnippet
 
@@ -90,7 +90,7 @@ snippet arr "create a c standard array"
 ${2:int} ${1:array}[${3:100}];
 endsnippet
 
-snippet lam "lambda" 
+snippet lams "lambda" 
 [${1:}](${2:auto a}){ return ${3:}; }
 endsnippet
 
@@ -112,7 +112,7 @@ endsnippet
 
 snippet enum "strongly typed enumerations" 
 enum class ${1:Enumeration} {
-    $2
+  $2
 };
 endsnippet
 
@@ -230,13 +230,13 @@ endsnippet
 
 snippet forit "for with iterators" 
 for( auto ${2:i} = begin($1), ${3:e} = end(${1:container}); $2 != $3; ++$2 ){
-    $4
+  $4
 }
 endsnippet
 
 snippet forp "upcounting for" 
 for( auto ${3:i} = ${1:from} ; $3 < ${2:to} ; ++$3 ){
-    $4
+  $4
 }
 endsnippet
 
@@ -278,16 +278,16 @@ endsnippet
 
 snippet copy "copy algorithm" 
 std::copy( begin(${1:container}),
-    end($1),
-    begin(${2:destination_container})
+  end($1),
+  begin(${2:destination_container})
 );
 endsnippet
 
 snippet copytostream "writes the elements of the container to stream" 
 // writes the elements of container $1 to stream $4
 std::copy( begin(${1:container}),
-    end($1), 
-    ${2:std::ostream_iterator<${3:type}>(${4:std::cout}, "\n")} 
+  end($1), 
+  ${2:std::ostream_iterator<${3:type}>(${4:std::cout}, "\n")} 
 );
 endsnippet
 
@@ -297,9 +297,9 @@ endsnippet
 
 snippet transform "algorithm transform" 
 std::transform( begin(${1:container}), 
-    end($1), 
-    begin($1), 
-    []( auto element ){ return ${2:element}; } 
+  end($1), 
+  begin($1), 
+  []( auto element ){ return ${2:element}; } 
 );
 endsnippet
 
@@ -360,30 +360,30 @@ endsnippet
 
 snippet operator "operatoroverload" 
 ${1:auto&} operator${2:+}( const ${3:$1}& rhs ){
-    return ;
+  return ;
 }
 endsnippet
 
 
 snippet switch "switch case" 
 switch(${1:}){
-    case ${2:}: {
-
-        break;
-    }
-    case ${3:}: {
-
-        break;
-    }
-    default:
-        assert(0);
+  case ${2:}: {
+    
+    break;
+  }
+  case ${3:}: {
+    
+    break;
+  }
+  default:
+   assert(0);
 }
 endsnippet
 
 snippet case  "case of a switch" 
 case ${1:} :{
-    $2
-    break;
+  $2
+  break;
 }
 endsnippet
 
@@ -519,28 +519,28 @@ endsnippet
 
 snippet fung "general function"
 ${1:type} ${2:function_name}(${3:int arg1}){
-    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
-    return ${4:0};
+  ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+  return ${4:0};
 }
 endsnippet
 
 snippet funv "function returning void"
 void ${1:function_name}(${2:int arg1}){
-    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+  ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
 }
 endsnippet
 
 snippet funa "function" b
 auto ${1:function_name}(${2}) {
-    ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
-    return ${3:0};
+  ${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+  return ${3:0};
 }
 endsnippet
 
 snippet tfuna "template function "
 template < typename ${1:T} >
 auto ${2:function_name}( ${3:$1 arg1} ){
-    return 0;
+  return 0;
 }
 endsnippet
 
@@ -585,36 +585,36 @@ bool c_set = false;
 
 // parse all switches
 while ( int opt = getopt(argc, argv, "a:c") ){
-    if ( opt == -1 ) break;
-    switch(opt) {
-	case 'a':{
-	    a_string = optarg;
-	    break;
-	}
-	case 'c':{
-	    c_set = true;
-	    break;
-	}
-	default:{
-	    fprintf(stderr, "Usage: %s \n",argv[0]);
-	    exit(EXIT_FAILURE);
-	}
+  if ( opt == -1 ) break;
+  switch(opt) {
+    case 'a':{
+      a_string = optarg;
+      break;
     }
+    case 'c':{
+      c_set = true;
+      break;
+    }
+    default:{
+      fprintf(stderr, "Usage: %s \n",argv[0]);
+      exit(EXIT_FAILURE);
+    }
+  }
 }
 // parse all non-option arguments
 for( ; optind < argc ; optind++){
-    std::cout << argv[optind] << std::endl;
+  std::cout << argv[optind] << std::endl;
 }
 endsnippet
 
 snippet fora "for range auto loop (fora)"
 for( ${4:auto}${3:&} ${2:element} : ${1:container} ){
-    ${VISUAL}${0}
+  ${VISUAL}${0}
 }
 
 endsnippet
 
-snippet lamm
+snippet lam
 [${4:&}](${1:auto}${2:&} ${3:a}){
   ${5://implement}
   return ;
@@ -633,6 +633,16 @@ ${2:object}->${1:clicked}().connect(
     ${3://implement}
   })
 );
+endsnippet
+
+snippet scen "SCENARIO (catch)" b
+SCENARIO("${1:name}","[${2:group}]"){
+  $3
+}
+endsnippet
+
+snippet req "REQUIRE (catch)" b
+REQUIRE( ${1:} ${2:==} ${3:} );
 endsnippet
 
 
